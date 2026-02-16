@@ -11,6 +11,7 @@ struct HomeView: View {
     @State private var userName: String = ""
     @State private var repos: [Repo]? = []
     @State private var goToDetail: Bool = false
+    @State private var isLoading = false
     
     var userURL: String {
         "https://api.github.com/users/\(userName)/repos"
@@ -25,7 +26,9 @@ struct HomeView: View {
                     .padding()
 
                 Button("Buscar") {
+                    isLoading = true
                     getUserRepos(userURL, completion: { repos in
+                        isLoading = false
                         self.repos = repos
                         print("el id es \(repos?.first?.name ?? "none")")
                         
@@ -44,6 +47,10 @@ struct HomeView: View {
                 }
                 
             }
+        }
+        
+        if isLoading{
+            ProgressView("Cargando...")
         }
     }
 }

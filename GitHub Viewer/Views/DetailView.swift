@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct DetailView: View {
-    let repo : [Repo]
+    let repo: [Repo]
     
     var body: some View {
         VStack{
@@ -24,15 +24,16 @@ struct DetailView: View {
                     Text("Loading avatar...")
                 }
             }
-            Text(repo.first?.owner.login ?? "Sin usuario")
+            
+            Text(repo.first?.owner.login.localizedCapitalized ?? "Sin usuario")
+                
             
             Divider()
             
             VStack{
-//                List (repo) { repo in
-//                
-//                    Text("\(repo.name)\n\(repo.language ?? "Sin lenguaje")")
-//                }
+                List(repo) { repos in
+                    Text("\(repos.name.localizedCapitalized)\n\(repos.language?.localizedCapitalized ?? "Sin lenguaje")")
+                }
             }
         }
     }

@@ -12,6 +12,7 @@ struct Repo: Decodable, Identifiable {
     let id: Int
     let name: String
     let owner: Owner
+    let language: String?
     var avatarURL: URL? {
         URL(string: owner.avatar)
     }
