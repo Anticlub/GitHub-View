@@ -8,11 +8,36 @@
 import SwiftUI
 
 struct DetailView: View {
+    let repo : [Repo]
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack{
+            AsyncImage(url: repo.first?.avatarURL) { image in
+                image
+                    .resizable()
+                    .frame(width: 150, height: 150, alignment: .center)
+                    .cornerRadius(150)
+                
+            } placeholder: {
+                VStack{
+                    ProgressView()
+                    Text("Loading avatar...")
+                }
+            }
+            Text(repo.first?.owner.login ?? "Sin usuario")
+            
+            Divider()
+            
+            VStack{
+//                List (repo) { repo in
+//                
+//                    Text("\(repo.name)\n\(repo.language ?? "Sin lenguaje")")
+//                }
+            }
+        }
     }
 }
 
-#Preview {
-    DetailView()
-}
+//#Preview {
+//    DetailView()
+//}
