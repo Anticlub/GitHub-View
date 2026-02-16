@@ -9,9 +9,11 @@ import SwiftUI
 
 struct HomeView: View {
     @State private var userName: String = ""
-    @State private var repos: [Repo]? = []
+    @State private var repos: [Repo] = []
     @State private var goToDetail: Bool = false
     @State private var isLoading = false
+    @State private var showError = false
+    @State private var errorMessage = ""
     
     var userURL: String {
         "https://api.github.com/users/\(userName)/repos"
@@ -26,32 +28,48 @@ struct HomeView: View {
                     .padding()
 
                 Button("Buscar") {
+                    goToDetail = false
                     isLoading = true
-                    getUserRepos(userURL, completion: { repos in
+                    getUserRepos(userURL) { result in
                         isLoading = false
-                        self.repos = repos
-                        print("el id es \(repos?.first?.name ?? "none")")
                         
-                        if self.repos != nil {
+                        switch result {
+                        case .success(let repos):
+                            self.repos = repos
                             goToDetail = true
+                            
+                        case .failure(let err):
+                            switch err {
+                            case .userNotFound:
+                                errorMessage = "User not found. Please, enter another username"
+                            case .network:
+                                errorMessage = "A network error has occurred. Check your Internet connection and try again later."
+                            case .invalidURL:
+                                errorMessage = "URL no valida"
+                            default:
+                                errorMessage = "Algo ha sido mal, vuelvelo a intentar"
+                            }
+                            showError = true
                         }
-                    })
+                    }
                 }
+                .disabled(isLoading)
             }
             .padding()
             .navigationDestination(isPresented: $goToDetail){
-                if let repos = repos {
-                    DetailView(repo: repos)
-                } else {
-                    Text("No se pudo cargar el usuario")
-                }
-                
+                DetailView(repo: repos)
+            }
+            .alert("Error", isPresented: $showError) {
+                Button ("OK", role: .cancel) {}
+            } message: {
+                Text(errorMessage)
             }
         }
         
         if isLoading{
             ProgressView("Cargando...")
         }
+        
     }
 }
 
