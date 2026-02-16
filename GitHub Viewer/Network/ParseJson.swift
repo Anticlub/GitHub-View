@@ -1,9 +1,3 @@
-//
-//  git.swift
-//  GitHub Viewer
-//
-//  Created by cristofer fernandez on 11/2/26.
-//
 
 import Foundation
 
@@ -23,9 +17,7 @@ func getUserRepos(_ userURL: String,
                 DispatchQueue.main.async{
                     completion(repo)
                 }
-                
             }
-            
         } else {
             completion(nil)
         }
@@ -36,7 +28,7 @@ func getUserRepos(_ userURL: String,
 
 func parseUserReposJSON(_ data: Data, completion: ([Repo]?) -> Void){
     
-    let repos = try? JSONDecoder().decode([Repo].self, from: data)
+    let repos = (try? JSONDecoder().decode([Repo].self, from: data)) ?? []
     
     completion(repos)
     

@@ -7,16 +7,28 @@
 
 import Foundation
 
-struct Repo: Decodable {
+struct Repo: Decodable, Identifiable {
     
+    let id: Int
     let name: String
     let owner: Owner
-    //let imageURL: URL
-    //let repos: [UserRepos]
+    var avatarURL: URL? {
+        URL(string: owner.avatar)
+    }
+    
+    
 }
 
 struct Owner: Decodable {
     
     let login: String
+    let avatar: String
+    
+    enum CodingKeys: String, CodingKey {
+        case login
+        case avatar = "avatar_url"
+    }
     
 }
+
+
