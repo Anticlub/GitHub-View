@@ -1,35 +1,50 @@
 
 import Foundation
 
+enum RepoFetchError: Error {
+    case invalidURL
+    case userNotFound
+    case network(Error)
+    case badStatus(Int)
+    case decoding
+}
+
 func getUserRepos(_ userURL: String,
                   session: URLSession = .shared,
-                  completion: @escaping ([Repo]?) -> Void){
+                  completion: @escaping (Result<[Repo], RepoFetchError>) -> Void) {
     
-    guard let URL = URL(string: userURL) else {return}
-    
-    let request = URLRequest(url: URL)
+    guard let URL = URL(string: userURL) else {
+        completion(.failure(.invalidURL))
+        return
+    }
     
     let task = session.dataTask(with: URL) { (data, response, error) in
-        if error == nil,
-           let statusCode = (response as? HTTPURLResponse)?.statusCode,
-           let data = data {
-            parseUserReposJSON(data) { repo in
-                DispatchQueue.main.async{
-                    completion(repo)
-                }
-            }
-        } else {
-            completion(nil)
-        }
         
+        let result: Result<[Repo], RepoFetchError>
+        
+        if let error {
+            result = .failure(.network(error))
+        } else {
+            let statusCode = (response as? HTTPURLResponse)?.statusCode ?? -1
+            
+            if statusCode == 404 {
+                result = .failure(.userNotFound)
+            } else if !(200...299).contains(statusCode) {
+                result = .failure(.badStatus(statusCode))
+            } else if let data = data,
+                      let repos = parseUserReposJSON(data) {
+                result = .success(repos)
+            } else {
+                result = .failure(.decoding)
+            }
+        }
+        DispatchQueue.main.async {
+            completion(result)
+        }
     }
     task.resume()
 }
 
-func parseUserReposJSON(_ data: Data, completion: ([Repo]?) -> Void){
-    
-    let repos = (try? JSONDecoder().decode([Repo].self, from: data)) ?? []
-    
-    completion(repos)
-    
+func parseUserReposJSON(_ data: Data) -> [Repo]? {
+    try? JSONDecoder().decode([Repo].self, from: data)
 }

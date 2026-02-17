@@ -8,15 +8,18 @@
 import SwiftUI
 
 struct DetailView: View {
-    let repo : [Repo]
+    let repo: [Repo]
+    let widthImage: CGFloat = 150
+    let heightImage: CGFloat = 150
+    let sizeCornerRadius: CGFloat = 150
     
     var body: some View {
         VStack{
             AsyncImage(url: repo.first?.avatarURL) { image in
                 image
                     .resizable()
-                    .frame(width: 150, height: 150, alignment: .center)
-                    .cornerRadius(150)
+                    .frame(width: widthImage, height: heightImage, alignment: .center)
+                    .cornerRadius(sizeCornerRadius)
                 
             } placeholder: {
                 VStack{
@@ -24,15 +27,16 @@ struct DetailView: View {
                     Text("Loading avatar...")
                 }
             }
-            Text(repo.first?.owner.login ?? "Sin usuario")
+            
+            Text(repo.first?.owner.login.localizedCapitalized ?? "Sin usuario")
+                
             
             Divider()
             
             VStack{
-//                List (repo) { repo in
-//                
-//                    Text("\(repo.name)\n\(repo.language ?? "Sin lenguaje")")
-//                }
+                List(repo) { repos in
+                    Text("\(repos.name.localizedCapitalized)\n\(repos.language?.localizedCapitalized ?? "Sin lenguaje")")
+                }
             }
         }
     }
