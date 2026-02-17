@@ -16,7 +16,8 @@ struct HomeView: View {
     @State private var errorMessage = ""
     
     var userURL: String {
-        "https://api.github.com/users/\(userName)/repos"
+        let cleanUserName = userName.trimmingCharacters(in: .whitespacesAndNewlines)
+        return "https://api.github.com/users/\(cleanUserName)/repos"
     }
     
     var body: some View {
