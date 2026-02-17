@@ -8,66 +8,34 @@
 import SwiftUI
 
 struct HomeView: View {
-    @State private var userName: String = ""
-    @State private var repos: [Repo] = []
-    @State private var goToDetail: Bool = false
-    @State private var isLoading = false
-    @State private var showError = false
-    @State private var errorMessage = ""
     
-    var userURL: String {
-        let cleanUserName = userName.trimmingCharacters(in: .whitespacesAndNewlines)
-        return "https://api.github.com/users/\(cleanUserName)/repos"
-    }
+    @StateObject private var vm = HomeViewModel()
     
     var body: some View {
 
         NavigationStack {
             VStack {
-                TextField("Introduce tu nombre", text: $userName)
+                TextField("Introduce tu nombre", text: $vm.userName)
                     .multilineTextAlignment(.center)
                     .padding()
 
                 Button("Buscar") {
-                    goToDetail = false
-                    isLoading = true
-                    getUserRepos(userURL) { result in
-                        isLoading = false
-                        
-                        switch result {
-                        case .success(let repos):
-                            self.repos = repos
-                            goToDetail = true
-                            
-                        case .failure(let err):
-                            switch err {
-                            case .userNotFound:
-                                errorMessage = "User not found. Please, enter another username"
-                            case .network:
-                                errorMessage = "A network error has occurred. Check your Internet connection and try again later."
-                            case .invalidURL:
-                                errorMessage = "URL no valida"
-                            default:
-                                errorMessage = "Algo ha sido mal, vuelvelo a intentar"
-                            }
-                            showError = true
-                        }
-                    }
+                    vm.search()
                 }
-                .disabled(isLoading)
+                .disabled(vm.isLoading)
             }
             .padding()
-            .navigationDestination(isPresented: $goToDetail){
-                DetailView(repo: repos)
+            .navigationDestination(isPresented: $vm.goToDetail){
+                DetailView(repo: vm.repos)
             }
-            .alert("Error", isPresented: $showError) {
+            .alert("Error", isPresented: $vm.showError) {
                 Button ("OK", role: .cancel) {}
             } message: {
-                Text(errorMessage)
+                Text(vm.errorMessage)
             }
         }
         
-        if isLoading{
+        if vm.isLoading{
             ProgressView("Cargando...")
         }
         
