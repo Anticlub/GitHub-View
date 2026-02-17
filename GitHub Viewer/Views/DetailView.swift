@@ -9,14 +9,17 @@ import SwiftUI
 
 struct DetailView: View {
     let repo: [Repo]
+    let widthImage: CGFloat = 150
+    let heightImage: CGFloat = 150
+    let sizeCornerRadius: CGFloat = 150
     
     var body: some View {
         VStack{
             AsyncImage(url: repo.first?.avatarURL) { image in
                 image
                     .resizable()
-                    .frame(width: 150, height: 150, alignment: .center)
-                    .cornerRadius(150)
+                    .frame(width: widthImage, height: heightImage, alignment: .center)
+                    .cornerRadius(sizeCornerRadius)
                 
             } placeholder: {
                 VStack{

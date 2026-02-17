@@ -18,57 +18,33 @@ func getUserRepos(_ userURL: String,
         return
     }
     
-    let request = URLRequest(url: URL)
-    
     let task = session.dataTask(with: URL) { (data, response, error) in
+        
+        let result: Result<[Repo], RepoFetchError>
+        
         if let error {
-            DispatchQueue.main.async{
-                completion(.failure(.network(error)))
+            result = .failure(.network(error))
+        } else {
+            let statusCode = (response as? HTTPURLResponse)?.statusCode ?? -1
+            
+            if statusCode == 404 {
+                result = .failure(.userNotFound)
+            } else if !(200...299).contains(statusCode) {
+                result = .failure(.badStatus(statusCode))
+            } else if let data = data,
+                      let repos = parseUserReposJSON(data) {
+                result = .success(repos)
+            } else {
+                result = .failure(.decoding)
             }
-            return
         }
-        
-        
-        let statusCode = (response as? HTTPURLResponse)?.statusCode ?? -1
-        
-        if statusCode == 404 {
-            DispatchQueue.main.async{
-                completion(.failure(.userNotFound))
-            }
-            return
-        }
-        
-        guard (200...299).contains(statusCode) else {
-            DispatchQueue.main.async{
-                completion(.failure(.badStatus(statusCode)))
-            }
-            return
-        }
-        
-        guard let data = data else{
-            DispatchQueue.main.async{
-                completion(.failure(.decoding))
-            }
-            return
-        }
-        
-        parseUserReposJSON(data) { repos in
-            DispatchQueue.main.async{
-                if let repos {
-                    completion(.success(repos))
-                } else {
-                    completion(.failure(.decoding))
-                }
-            }
+        DispatchQueue.main.async {
+            completion(result)
         }
     }
-        task.resume()
-    }
-    
-    func parseUserReposJSON(_ data: Data, completion: ([Repo]?) -> Void){
-        
-        let repos = try? JSONDecoder().decode([Repo].self, from: data)
-        completion(repos)
-        
-    }
+    task.resume()
+}
 
+func parseUserReposJSON(_ data: Data) -> [Repo]? {
+    try? JSONDecoder().decode([Repo].self, from: data)
+}
