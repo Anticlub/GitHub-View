@@ -46,6 +46,8 @@ class HomeViewModel: ObservableObject {
                     self.errorMessage = "A network error has occurred. Check your Internet connection and try again later."
                 case .invalidURL:
                     self.errorMessage = "URL no valida"
+                case .badStatus(let code):
+                    self.errorMessage = "El servidor devolvió un error (código: \(code)"
                 default:
                     self.errorMessage = "Algo ha sido mal, vuelvelo a intentar"
                 }

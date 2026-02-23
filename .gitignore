@@ -1,0 +1,11 @@
+echo "# Xcode
+xcuserdata/
+*.xcuserstate
+DerivedData/
+
+# Swift Package Manager
+.build/
+
+# macOS
+.DS_Store
+" >> .gitignore
