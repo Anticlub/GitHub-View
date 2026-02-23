@@ -1,0 +1,41 @@
+/* Placeholder text shown in the username search text field */
+"TEXT_FIELD_USERNAME" = "User";
+
+/* Text displayed when the user has no username available */
+"TEXT_USER_NIL" = "No user";
+
+/* Text displayed when the user has no language specified */
+"TEXT_LANGUAGE_NIL" = "No language";
+
+/* Progress indicator text shown while fetching user data */
+"TEXT_PROGRESSVIEW_SEARCHING_USER" = "Searching user";
+
+/* Progress indicator text shown while loading the user avatar */
+"TEXT_PROGRESSVIEW_LOADING_AVATAR" = "Loading avatar...";
+
+/* Title of the button used to search for a user */
+"SEARCH_BUTTON" = "Search user";
+
+/* Title of the generic confirmation button in error alerts */
+"TEXT_BUTTON_ERROR" = "Ok";
+
+/* Title shown in the error alert dialog */
+"TEXT_SHOW_BUTTON_ERROR" = "Error";
+
+/* Error message displayed when the requested user does not exist */
+"ERROR_USER_NOT_FOUND_MESSAGE" = "User not found. Please, enter another username.";
+
+/* Error message displayed when the constructed API URL is invalid */
+"ERROR_INVALID_URL_MESSAGE" = "Invalid URL.";
+
+/* Error message displayed when network connection error occurs */
+"ERROR_NETWORK_MESSAGE" = "Please check your Internet connection.";
+
+/* Error message displayed when the server returns an unexpected HTTP status */
+"ERROR_BAD_STATUS_MESSAGE" = "The server returned an error (code: %d).";
+
+/* Error message displayed when the JSON response cannot be decoded */
+"ERROR_DECODING_MESSAGE" = "Could not decode the JSON file.";
+
+/* Generic fallback error message for unexpected failures */
+"ERROR_DEFAULT_MESSAGE" = "Something has gone, try again.";

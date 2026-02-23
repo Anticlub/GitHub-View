@@ -20,7 +20,7 @@ class HomeViewModel: ObservableObject {
     
     private var userURL: String {
         let cleanUserName = userName.trimmingCharacters(in: .whitespacesAndNewlines)
-        return "https://api.github.com/users/\(cleanUserName)/repos"
+        return "https://api.github.com/user"
     }
 
     func search() {
@@ -41,15 +41,15 @@ class HomeViewModel: ObservableObject {
             case .failure(let err):
                 switch err {
                 case .userNotFound:
-                    self.errorMessage = "User not found. Please, enter another username"
+                    self.errorMessage = L10n.errorUserNotFound
                 case .network:
-                    self.errorMessage = "A network error has occurred. Check your Internet connection and try again later."
+                    self.errorMessage = L10n.errorNetwork
                 case .invalidURL:
-                    self.errorMessage = "URL no valida"
+                    self.errorMessage = L10n.errorInvalidURL
                 case .badStatus(let code):
-                    self.errorMessage = "El servidor devolvió un error (código: \(code)"
+                    self.errorMessage = String(format: L10n.errorBadStatus, code)
                 default:
-                    self.errorMessage = "Algo ha sido mal, vuelvelo a intentar"
+                    self.errorMessage = L10n.errorDefault
                 }
                 self.showError = true
             }

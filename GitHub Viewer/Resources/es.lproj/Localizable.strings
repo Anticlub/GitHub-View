@@ -1,0 +1,41 @@
+/* Placeholder text shown in the username search text field */
+"TEXT_FIELD_USERNAME" = "Usuario";
+
+/* Text displayed when the user has no username available */
+"TEXT_USER_NIL" = "Sin usuario";
+
+/* Text displayed when the user has no language specified */
+"TEXT_LANGUAGE_NIL" = "Sin lenguaje";
+
+/* Progress indicator text shown while fetching user data */
+"TEXT_PROGRESSVIEW_SEARCHING_USER" = "Buscando usuario";
+
+/* Progress indicator text shown while loading the user avatar */
+"TEXT_PROGRESSVIEW_LOADING_AVATAR" = "Cargando avatar...";
+
+/* Title of the button used to search for a user */
+"SEARCH_BUTTON" = "Buscar usuario";
+
+/* Title of the generic confirmation button in error alerts */
+"TEXT_BUTTON_ERROR" = "Vale";
+
+/* Title shown in the error alert dialog */
+"TEXT_SHOW_BUTTON_ERROR" = "Error";
+
+/* Error message displayed when the requested user does not exist */
+"ERROR_USER_NOT_FOUND_MESSAGE" = "Usuario no encontrado. Por favor introduce otro username.";
+
+/* Error message displayed when the constructed API URL is invalid */
+"ERROR_INVALID_URL_MESSAGE" = "URL no válida.";
+
+/* Error message displayed when network connection error occurs */
+"ERROR_NETWORK_MESSAGE" = "Comprueba tu conexión a Internet.";
+
+/* Error message displayed when the server returns an unexpected HTTP status */
+"ERROR_BAD_STATUS_MESSAGE" = "El servidor devolvió un error (código: %d).";
+
+/* Error message displayed when the JSON response cannot be decoded */
+"ERROR_DECODING_MESSAGE" = "No se ha podido descodificar el archivo JSON.";
+
+/* Generic fallback error message for unexpected failures */
+"ERROR_DEFAULT_MESSAGE" = "Algo ha salido mal, vuelve a intentarlo.";
