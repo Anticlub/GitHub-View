@@ -15,11 +15,11 @@ struct HomeView: View {
 
         NavigationStack {
             VStack {
-                TextField("Introduce tu nombre", text: $vm.userName)
+                TextField(L10n.textFieldUsername, text: $vm.userName)
                     .multilineTextAlignment(.center)
                     .padding()
 
-                Button("Buscar") {
+                Button(L10n.searchButton) {
                     vm.search()
                 }
                 .disabled(vm.isLoading)
@@ -28,15 +28,15 @@ struct HomeView: View {
             .navigationDestination(isPresented: $vm.goToDetail){
                 DetailView(repo: vm.repos)
             }
-            .alert("Error", isPresented: $vm.showError) {
-                Button ("OK", role: .cancel) {}
+            .alert(L10n.errorTitle, isPresented: $vm.showError) {
+                Button (L10n.errorButton, role: .cancel) {}
             } message: {
                 Text(vm.errorMessage)
             }
         }
         
         if vm.isLoading{
-            ProgressView("Cargando...")
+            ProgressView(L10n.searchingUser)
         }
         
     }
