@@ -20,8 +20,7 @@ class HomeViewModel: ObservableObject {
     
     private var userURL: String {
         let cleanUserName = userName.trimmingCharacters(in: .whitespacesAndNewlines)
-        //return "https://api.github.com/users/\(cleanUserName)/repos"
-        return "https://api.github.com/user"
+        return "https://api.github.com/users/\(cleanUserName)/repos"
     }
 
     func search() {
