@@ -1,5 +1,5 @@
 //
-//  User.swift
+//  Repo.swift
 //  GitHub Viewer
 //
 //  Created by cristofer fernandez on 11/2/26.
@@ -31,9 +31,4 @@ struct Owner: Decodable {
     }
     
 }
-
-
-
-//COMENTARIO PARA SIMULAR QUE MAIN VA POR DELANTE DE LA RAMA --- ERROR RAMA ---
-// COMENTARIO PARA SIMULAR QUE MAIN VA POR DELANTE DE LA RAMA --- ERROR MAIN ---
 
