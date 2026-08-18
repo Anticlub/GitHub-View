@@ -13,6 +13,16 @@ Same app, two native ecosystems / Misma app, dos ecosistemas nativos.
 
 ---
 
+## 📸 Capturas / Screenshots
+
+<p align="center">
+  <img src="docs/img/search.png" width="240" alt="Pantalla de búsqueda / Search screen"/>
+  &nbsp;&nbsp;
+  <img src="docs/img/repos.png" width="240" alt="Lista de repos / Repo list"/>
+</p>
+
+---
+
 ## 📚 Overview / Descripción general
 
 **EN:** The user types a GitHub username; the app calls `GET /users/{user}/repos`, decodes the response and navigates to a detail screen showing the user's avatar and the list of repositories with their language. Loading state and error messages (user not found, no network, bad status…) are handled explicitly and localized.
